@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -154,13 +155,15 @@ namespace TP2KittikhounHugo
             desT.Start();
             button_Arreter.Enabled = true;
             button_Lancer.Enabled = false;
+            button_Rejouer1D.Enabled = false;
+            button_Rejouer2D.Enabled = false;
+            button_Rejouer3D.Enabled = false;
         }
 
         private void button_Arreter_Click(object sender, EventArgs e)
         {
             string chemin = Directory.GetParent(path: Environment.CurrentDirectory).Parent.Parent.FullName;
             string cheminResources = Path.Combine(chemin, "Resources");
-            int[] points = new int[partieEnCours.NbJoueur];
 
             if (desT != null && desT.IsAlive)
             {
@@ -216,6 +219,11 @@ namespace TP2KittikhounHugo
                     pictureBox_Joueur4D2.Image = Image.FromFile(Path.Combine(cheminResources, partieEnCours.Joueurs[3].Avatar + "_" + de2 + ".png"));
                     pictureBox_Joueur4D3.Image = Image.FromFile(Path.Combine(cheminResources, partieEnCours.Joueurs[3].Avatar + "_" + de3 + ".png"));
                 }
+
+                button_Rejouer1D.Enabled = true;
+                button_Rejouer2D.Enabled = true;
+                button_Rejouer3D.Enabled = true;
+
             }
             if (deT1 != null && deT1.IsAlive)
             {
@@ -293,29 +301,7 @@ namespace TP2KittikhounHugo
                 // Gestion des tours et partie
                 if (partieEnCours.NbJoueur == partieEnCours.TourEnCours)
                 {
-                    // Remplir le tableau avec les pointages des joueurs
-                    for (int i = 0; i < partieEnCours.NbJoueur; i++)
-                    {
-                        points[i] = partieEnCours.Joueurs[i].Pointage;
-                    }
-
-                    int joueurGagant = partieEnCours.joueurGagnant(points);
-                    partieEnCours.Joueurs[joueurGagant].NbJetons += cagnote + (partieEnCours.NbJoueur - 1);
-                    if (partieEnCours.NbJoueur > 1)
-                    {
-                        MessageBox.Show("Le gagnant de cette partie est " + partieEnCours.Joueurs[joueurGagant].Nom, "Résultats des joueurs", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-                    // Faire perdre 1 jeton à tous les autres joueurs sauf le gagnant
-                    for (int i = 0; i < partieEnCours.NbJoueur; i++)
-                    {
-                        if (i != joueurGagant)
-                        {
-                            partieEnCours.Joueurs[i].NbJetons--;
-                        }
-                    }
-
-                    nouvellePartie();
+                    gererLeGagnant();
                 }
                 else
                 {
@@ -402,28 +388,7 @@ namespace TP2KittikhounHugo
                 // Gestion des tours et partie
                 if (partieEnCours.NbJoueur == partieEnCours.TourEnCours)
                 {
-                    // Remplir le tableau avec les pointages des joueurs
-                    for (int i = 0; i < partieEnCours.NbJoueur; i++)
-                    {
-                        points[i] = partieEnCours.Joueurs[i].Pointage;
-                    }
-
-                    int joueurGagant = partieEnCours.joueurGagnant(points);
-                    partieEnCours.Joueurs[joueurGagant].NbJetons += cagnote + (partieEnCours.NbJoueur - 1);
-                    if (partieEnCours.NbJoueur > 1)
-                    {
-                        MessageBox.Show("Le gagnant de cette partie est " + partieEnCours.Joueurs[joueurGagant].Nom, "Résultats des joueurs", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    // Faire perdre 1 jeton à tous les autres joueurs sauf le gagnant
-                    for (int i = 0; i < partieEnCours.NbJoueur; i++)
-                    {
-                        if (i != joueurGagant)
-                        {
-                            partieEnCours.Joueurs[i].NbJetons--;
-                        }
-                    }
-
-                    nouvellePartie();
+                    gererLeGagnant();
                 }
                 else
                 {
@@ -514,28 +479,7 @@ namespace TP2KittikhounHugo
                 // Gestion des tours et partie
                 if (partieEnCours.NbJoueur == partieEnCours.TourEnCours)
                 {
-                    // Remplir le tableau avec les pointages des joueurs
-                    for (int i = 0; i < partieEnCours.NbJoueur; i++)
-                    {
-                        points[i] = partieEnCours.Joueurs[i].Pointage;
-                    }
-
-                    int joueurGagant = partieEnCours.joueurGagnant(points);
-                    partieEnCours.Joueurs[joueurGagant].NbJetons += cagnote + (partieEnCours.NbJoueur - 1);
-                    if (partieEnCours.NbJoueur > 1)
-                    {
-                        MessageBox.Show("Le gagnant de cette partie est " + partieEnCours.Joueurs[joueurGagant].Nom, "Résultats des joueurs", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    // Faire perdre 1 jeton à tous les autres joueurs sauf le gagnant
-                    for (int i = 0; i < partieEnCours.NbJoueur; i++)
-                    {
-                        if (i != joueurGagant)
-                        {
-                            partieEnCours.Joueurs[i].NbJetons--;
-                        }
-                    }
-
-                    nouvellePartie();
+                    gererLeGagnant();
                 }
                 else
                 {
@@ -546,9 +490,6 @@ namespace TP2KittikhounHugo
             }
 
             button_Arreter.Enabled = false;
-            button_Rejouer1D.Enabled = true;
-            button_Rejouer2D.Enabled = true;
-            button_Rejouer3D.Enabled = true;
         }
 
         private void button_Rejouer1D_Click(object sender, EventArgs e)
@@ -667,9 +608,10 @@ namespace TP2KittikhounHugo
             nouvellePartie();
         }
 
+        // Commencer une nouvelle partie
         public void nouvellePartie()
         {
-
+            cagnote = 0;
             for (int i = 0; i < partieEnCours.NbJoueur; i++)
             {
                 if (partieEnCours.Joueurs[i].NbJetons <= 0)
@@ -678,6 +620,9 @@ namespace TP2KittikhounHugo
                     this.Close();
                 }
             }
+            button_Rejouer1D.Enabled = false;
+            button_Rejouer2D.Enabled = false;
+            button_Rejouer3D.Enabled = false;
             pictureBox_De1.Image = null;
             pictureBox_De2.Image = null;
             pictureBox_De3.Image = null;
@@ -735,9 +680,146 @@ namespace TP2KittikhounHugo
             partieEnCours.TourEnCours = 1;
             numericUpDown_Tour.Value = 1;
             partieEnCours.PartieActuelle++;
+            for (int i = 0; i < partieEnCours.NbJoueur; i++)
+            {
+                partieEnCours.Joueurs[i].NbPartie++;
+            }
 
             SystemSounds.Beep.Play();
         }
 
+        public void gererLeGagnant()
+        {
+            int joueurGagnant = -1;
+            int meilleurScore = -1;
+
+            // Trouver le joueur avec le plus grand pointage, en excluant ceux qui sont supérieurs à 21
+            for (int i = 0; i < partieEnCours.NbJoueur; i++)
+            {
+                int score = partieEnCours.Joueurs[i].Pointage;
+
+                if (score <= 21 && score > meilleurScore)
+                {
+                    meilleurScore = score;
+                    joueurGagnant = i;
+                }
+            }
+
+            // Si aucun joueur n'est valide (tous les joueurs ont plus de 21), on affiche un message
+            if (joueurGagnant == -1)
+            {
+                MessageBox.Show("Aucun gagnant, tous les joueurs ont plus de 21!", "Résultats des joueurs", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Ajouter des jetons au gagnant
+                partieEnCours.Joueurs[joueurGagnant].NbJetons += cagnote + (partieEnCours.NbJoueur - 1);
+
+                if (partieEnCours.NbJoueur > 1)
+                {
+                    MessageBox.Show("Le gagnant de cette partie est " + partieEnCours.Joueurs[joueurGagnant].Nom, "Résultats des joueurs", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if (partieEnCours.Joueurs[0].Pointage <= 21)
+                    {
+                        partieEnCours.Joueurs[0].NbJetons++;
+                    }
+                }
+
+                // Faire perdre 1 jeton à tous les autres joueurs sauf le gagnant
+                for (int i = 0; i < partieEnCours.NbJoueur; i++)
+                {
+                    if (i != joueurGagnant)
+                    {
+                        partieEnCours.Joueurs[i].NbJetons--;
+                    }
+                }
+            }
+            nouvellePartie();
+        }
+
+        internal void ModificationJoueurs(Joueur[] joueurs)
+        {
+            partieEnCours.Joueurs = joueurs;
+            // Mise à jour des groupBox avec les noms des joueurs
+            if (partieEnCours.NbJoueur == 1)
+            {
+                groupBox_Joueur1.Text = partieEnCours.Joueurs[0].Nom;
+                textBox_JetonsJoueur1.Text = partieEnCours.Joueurs[0].NbJetons.ToString();
+                partieEnCours.Joueurs[0].Tour = 1;
+                groupBox_Joueur2.Text = null;
+                groupBox_Joueur3.Text = null;
+                groupBox_Joueur4.Text = null;
+            }
+            else
+            if (partieEnCours.NbJoueur == 2)
+            {
+                groupBox_Joueur1.Text = partieEnCours.Joueurs[0].Nom;
+                textBox_JetonsJoueur1.Text = partieEnCours.Joueurs[0].NbJetons.ToString();
+                partieEnCours.Joueurs[0].Tour = 1;
+
+                groupBox_Joueur2.Text = partieEnCours.Joueurs[1].Nom;
+                textBox_JetonsJoueur2.Text = partieEnCours.Joueurs[1].NbJetons.ToString();
+                partieEnCours.Joueurs[1].Tour = 2;
+
+                groupBox_Joueur3.Text = null;
+                groupBox_Joueur4.Text = null;
+            }
+            else
+            if (partieEnCours.NbJoueur == 3)
+            {
+                groupBox_Joueur1.Text = partieEnCours.Joueurs[0].Nom;
+                textBox_JetonsJoueur1.Text = partieEnCours.Joueurs[0].NbJetons.ToString();
+                partieEnCours.Joueurs[0].Tour = 1;
+
+                groupBox_Joueur2.Text = partieEnCours.Joueurs[1].Nom;
+                textBox_JetonsJoueur2.Text = partieEnCours.Joueurs[1].NbJetons.ToString();
+                partieEnCours.Joueurs[1].Tour = 2;
+
+                groupBox_Joueur3.Text = partieEnCours.Joueurs[2].Nom;
+                textBox_JetonsJoueur3.Text = partieEnCours.Joueurs[2].NbJetons.ToString();
+                partieEnCours.Joueurs[2].Tour = 3;
+
+                groupBox_Joueur4.Text = null;
+            }
+            else
+            if (partieEnCours.NbJoueur == 4)
+            {
+                groupBox_Joueur1.Text = partieEnCours.Joueurs[0].Nom;
+                textBox_JetonsJoueur1.Text = partieEnCours.Joueurs[0].NbJetons.ToString();
+                partieEnCours.Joueurs[0].Tour = 1;
+
+                groupBox_Joueur2.Text = partieEnCours.Joueurs[1].Nom;
+                textBox_JetonsJoueur2.Text = partieEnCours.Joueurs[1].NbJetons.ToString();
+                partieEnCours.Joueurs[1].Tour = 2;
+
+                groupBox_Joueur3.Text = partieEnCours.Joueurs[2].Nom;
+                textBox_JetonsJoueur3.Text = partieEnCours.Joueurs[2].NbJetons.ToString();
+                partieEnCours.Joueurs[2].Tour = 3;
+
+                groupBox_Joueur4.Text = partieEnCours.Joueurs[3].Nom;
+                textBox_JetonsJoueur4.Text = partieEnCours.Joueurs[3].NbJetons.ToString();
+                partieEnCours.Joueurs[3].Tour = 4;
+            }
+
+            // Commencer le premier Tour donc celui du premier Joueur
+            numericUpDown_Tour.Value = partieEnCours.TourEnCours;
+        }
+
+        private void propriétésDesJoueursToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Création de l'objet formulaire d'affichage
+            Proprietes formPropriete = new Proprietes(this);
+
+            // Ajouter tous les joueurs de la listBox_Selection à la FenetreJoueur avant d'afficher la fenêtre
+            foreach (Joueur joueur in partieEnCours.Joueurs)
+            {
+                formPropriete.AjouterListe(joueur);  // Ajouter chaque joueur à la FenetreJoueur
+            }
+
+            // Afficher la fenêtre pour la création du joueur
+            formPropriete.ShowDialog();
+        }
     }
 }

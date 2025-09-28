@@ -61,6 +61,7 @@
             // creerUnJoueurToolStripMenuItem
             // 
             creerUnJoueurToolStripMenuItem.Name = "creerUnJoueurToolStripMenuItem";
+            creerUnJoueurToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
             creerUnJoueurToolStripMenuItem.Size = new Size(124, 22);
             creerUnJoueurToolStripMenuItem.Text = "Créer un joueur...";
             creerUnJoueurToolStripMenuItem.Click += creerUnJoueurToolStripMenuItem_Click;
@@ -75,6 +76,7 @@
             // quitterToolStripMenuItem
             // 
             quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
+            quitterToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
             quitterToolStripMenuItem.Size = new Size(65, 22);
             quitterToolStripMenuItem.Text = "Quitter";
             quitterToolStripMenuItem.Click += button_Quitter_Click;

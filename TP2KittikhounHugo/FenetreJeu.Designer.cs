@@ -30,7 +30,6 @@
         {
             menuStrip_Jeu = new MenuStrip();
             nouvellePartieToolStripMenuItem = new ToolStripMenuItem();
-            propriétésDesJoueursToolStripMenuItem = new ToolStripMenuItem();
             retourÈToolStripMenuItem = new ToolStripMenuItem();
             numericUpDown_Tour = new NumericUpDown();
             label_Jetons = new Label();
@@ -86,6 +85,7 @@
             pictureBox_Joueur4D3 = new PictureBox();
             pictureBox_Joueur4D2 = new PictureBox();
             pictureBox_Joueur4D1 = new PictureBox();
+            propriétésDesJoueursToolStripMenuItem = new ToolStripMenuItem();
             menuStrip_Jeu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_Tour).BeginInit();
             groupBox_Joueur1.SuspendLayout();
@@ -134,19 +134,15 @@
             // nouvellePartieToolStripMenuItem
             // 
             nouvellePartieToolStripMenuItem.Name = "nouvellePartieToolStripMenuItem";
+            nouvellePartieToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
             nouvellePartieToolStripMenuItem.Size = new Size(112, 22);
             nouvellePartieToolStripMenuItem.Text = "Nouvelle partie";
             nouvellePartieToolStripMenuItem.Click += nouvellePartieToolStripMenuItem_Click;
             // 
-            // propriétésDesJoueursToolStripMenuItem
-            // 
-            propriétésDesJoueursToolStripMenuItem.Name = "propriétésDesJoueursToolStripMenuItem";
-            propriétésDesJoueursToolStripMenuItem.Size = new Size(156, 22);
-            propriétésDesJoueursToolStripMenuItem.Text = "Propriétés des joueurs";
-            // 
             // retourÈToolStripMenuItem
             // 
             retourÈToolStripMenuItem.Name = "retourÈToolStripMenuItem";
+            retourÈToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
             retourÈToolStripMenuItem.Size = new Size(127, 22);
             retourÈToolStripMenuItem.Text = "Retour à l'acceuil";
             retourÈToolStripMenuItem.Click += retourÈToolStripMenuItem_Click;
@@ -676,6 +672,13 @@
             pictureBox_Joueur4D1.TabIndex = 53;
             pictureBox_Joueur4D1.TabStop = false;
             // 
+            // propriétésDesJoueursToolStripMenuItem
+            // 
+            propriétésDesJoueursToolStripMenuItem.Name = "propriétésDesJoueursToolStripMenuItem";
+            propriétésDesJoueursToolStripMenuItem.Size = new Size(156, 22);
+            propriétésDesJoueursToolStripMenuItem.Text = "Propriétés des joueurs";
+            propriétésDesJoueursToolStripMenuItem.Click += propriétésDesJoueursToolStripMenuItem_Click;
+            // 
             // FenetreJeu
             // 
             AutoScaleDimensions = new SizeF(10F, 23F);
@@ -773,7 +776,6 @@
 
         private MenuStrip menuStrip_Jeu;
         private ToolStripMenuItem nouvellePartieToolStripMenuItem;
-        private ToolStripMenuItem propriétésDesJoueursToolStripMenuItem;
         private ToolStripMenuItem retourÈToolStripMenuItem;
         private NumericUpDown numericUpDown_Tour;
         private Label label_Jetons;
@@ -829,5 +831,6 @@
         private PictureBox pictureBox_Joueur4D3;
         private PictureBox pictureBox_Joueur4D2;
         private PictureBox pictureBox_Joueur4D1;
+        private ToolStripMenuItem propriétésDesJoueursToolStripMenuItem;
     }
 }

@@ -63,6 +63,7 @@ namespace TP2KittikhounHugo
             _nbPartie = 0;
         }
 
+        // Constructeur
         public Joueur(int pNoJoueur, string pNom, string pAvatar, int pNbJetons, int pPointage, int pTour, int pNbPartie)
         {
             _noJoueur = pNoJoueur;

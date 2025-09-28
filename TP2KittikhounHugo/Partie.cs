@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP2KittikhounHugo
 {
-    internal class Partie
+    public class Partie
     {
         private int _nbJoueur;
         public int NbJoueur

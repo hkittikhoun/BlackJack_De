@@ -88,6 +88,7 @@
             // retourALacceuilToolStripMenuItem
             // 
             retourALacceuilToolStripMenuItem.Name = "retourALacceuilToolStripMenuItem";
+            retourALacceuilToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
             retourALacceuilToolStripMenuItem.Size = new Size(127, 22);
             retourALacceuilToolStripMenuItem.Text = "Retour à l'acceuil";
             retourALacceuilToolStripMenuItem.Click += retourALacceuilToolStripMenuItem_Click;
