@@ -1,0 +1,19 @@
+﻿[*.{cs,vb}]
+
+# IDE0032: Utiliser auto-property
+dotnet_style_prefer_auto_properties = true
+
+# Default severity for analyzer diagnostics with category 'Style'
+dotnet_analyzer_diagnostic.category-Style.severity = none
+
+# CS8618: Un champ non-nullable doit contenir une valeur autre que Null lors de la fermeture du constructeur. Envisagez d’ajouter le modificateur « required » ou de déclarer le champ comme pouvant accepter la valeur Null.
+dotnet_diagnostic.CS8618.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none
+
+# CS8603: Existence possible d'un retour de référence null.
+dotnet_diagnostic.CS8603.severity = none
+
+# IDE0032: Utiliser auto-property
+dotnet_diagnostic.IDE0032.severity = none
